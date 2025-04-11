@@ -1,0 +1,24 @@
+/*
+
+
+Last week you did a fantastic job with basic Java syntax, so now it's time to explore its OOP features. This task is slightly longer
+, so it'll give up to TWO POINTS, but it's still something you should be able to comfortably accomplish in one session. Here it goes:
+
+Using Java's OOP features, create a model for the following Company Management system:
+- the Company (let's assume there's just one) has Employees and Projects
+- Employees can be either B2B or Contract Employees
+- when a B2B Employee is paid their salary, they must payTaxes (a Contract Employee doesn't have any extra behaviors)
+- a Project can have multiple Employees, and an Employee can be involved in multiple Projects
+- the system must expose the following behaviors (public API):
+	- reassign an Employee to a different Project
+	- paySalary to either: a single Employee, everyone in a Project, or the whole Company at once
+
+The challenge is about *modeling the system*, not about the business features themself, so feel free to use in-memory
+Collections and simple terminal messages to simulate behaviors.
+
+The design is completely up to you - you can keep it super-simple, or show off your awesome knowledge of Design Patterns -
+both are worth the same amount of points, so it's just a matter of how much time you have to study!
+
+If you can't complete the whole challenge, *do as much as you can*, and it will still be worth ONE POINT.
+
+ */

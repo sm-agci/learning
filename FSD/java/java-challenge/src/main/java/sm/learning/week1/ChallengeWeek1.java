@@ -11,8 +11,7 @@ public class ChallengeWeek1 {
 
     @PostConstruct
     void populateMembers() {
-        BoardMember member = new BoardMember("Jan Kowalski", 0);
-        boardMembers.add(member);
+        boardMembers.add(new BoardMember("Jan Kowalski", 0));
         boardMembers.add(new BoardMember("Paweł Michałowski", 0));
         boardMembers.add(new BoardMember("Ola Ułańska", 0));
         boardMembers.add(new BoardMember("Zosia Kowalska", 0));
