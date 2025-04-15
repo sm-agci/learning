@@ -1,57 +1,39 @@
 package sm.learning.week2;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
 import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 @Getter
 @ToString
+@Builder
 class Company {
     private String name;
+    @Builder.Default
     private Set<Employee> employees = new HashSet<>();
+    @Builder.Default
     private Set<Project> projects = new HashSet<>();
-
-    public Company(String name) {
-        this.name = name;
-    }
-
     public void addProject(Project project) {
         projects.add(project);
     }
-
+    public void removeProject(Project project) {
+        projects.remove(project);
+    }
     public void addEmployee(Employee employee) {
         employees.add(employee);
     }
+    public void removeEmployee(Employee employee) {
+        employees.remove(employee);
+    }
 
-    public void assignEmployeeToProject(Employee e, Project p) {
-        Optional<Employee> employee = employees.stream().filter(x -> x.getId() == e.getId()).findFirst();
-        Optional<Project> project = projects.stream().filter(x -> x.getId() == p.getId()).findFirst();
-        if (employee.isPresent() && project.isPresent()) {
-            e.getProjects().add(project.get());
-            p.getEmployees().add(employee.get());
+    public void reassignEmployee(Employee employee, Project fromProject, Project toProject) {
+        if (fromProject != null) {
+            fromProject.removeEmployee(employee);
         }
-    }
-
-    public void unassignEmployeeFromProject(Employee e, Project p) {
-        Optional<Employee> employee = employees.stream().filter(x -> x.getId() == e.getId()).findFirst();
-        Optional<Project> project = projects.stream().filter(x -> x.getId() == p.getId()).findFirst();
-        if (employee.isPresent() && project.isPresent()) {
-            e.getProjects().remove(project.get());
-            p.getEmployees().remove(employee.get());
-        }
-    }
-
-    public void paySalary(Employee e) {
-        e.paySalary();
-    }
-
-    public void paySalary(Project p) {
-        List<Employee> employees = getEmployees().stream().filter(x -> x.getProjects().contains(p)).toList();
-        employees.forEach(x -> x.paySalary());
+        toProject.addEmployee(employee);
     }
 
     public void paySalary() {
@@ -64,7 +46,7 @@ class Company {
         sb.append("COMPANY: ").append(name).append("\n");
         sb.append("*********************************\n");
         sb.append("Employees: \n");
-        getEmployees().stream().sorted().forEach(x -> sb.append(x).append("\n"));
+        getEmployees().stream().sorted().forEach(x -> sb.append(x));
         sb.append("*********************************\n");
         sb.append("Company Projects: \n");
         getProjects().stream().sorted().forEach(x -> sb.append(x).append("\n"));

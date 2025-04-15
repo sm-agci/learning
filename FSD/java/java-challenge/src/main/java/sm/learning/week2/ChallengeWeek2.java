@@ -3,30 +3,28 @@ package sm.learning.week2;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
-import java.util.HashSet;
-
 
 @Slf4j
 @Component
 public class ChallengeWeek2 {
 
     public void runCompany() {
-        Company company = new Company("SM");
+        Company company = Company.builder().name("SM").build();
         //log.debug("Company status: \n{}", company);
 
-        B2BEmployee john = B2BEmployee.builder().id(1).companyName("John B2B").salary(12000).tax(10.5).projects(new HashSet<>()).build();
-        B2BEmployee mark = B2BEmployee.builder().id(2).companyName("Mark B2B").salary(7500).tax(7).projects(new HashSet<>()).build();
-        ContractEmployee clara = ContractEmployee.builder().id(3).firstName("Clara").lastName("Doe").salary(10000).projects(new HashSet<>()).build();
-        ContractEmployee eli = ContractEmployee.builder().id(4).firstName("Eli").lastName("Elo").salary(14000).projects(new HashSet<>()).build();
+        B2BEmployee john = B2BEmployee.builder().id(1).companyName("John B2B").salary(12000).taxRate(10.5).build();
+        B2BEmployee mark = B2BEmployee.builder().id(2).companyName("Mark B2B").salary(7500).taxRate(7).build();
+        ContractEmployee clara = ContractEmployee.builder().id(3).firstName("Clara").lastName("Doe").salary(10000).build();
+        ContractEmployee eli = ContractEmployee.builder().id(4).firstName("Eli").lastName("Elo").salary(14000).build();
 
         company.addEmployee(john);
         company.addEmployee(mark);
         company.addEmployee(clara);
         company.addEmployee(eli);
 
-        Project ukProject = Project.builder().id(1).name("uk-run").employees(new HashSet<>()).build();
-        Project usProject = Project.builder().id(2).name("us-run").employees(new HashSet<>()).build();
-        Project deProject = Project.builder().id(3).name("de-run").employees(new HashSet<>()).build();
+        Project ukProject = Project.builder().id(1).name("uk-run").build();
+        Project usProject = Project.builder().id(2).name("us-run").build();
+        Project deProject = Project.builder().id(3).name("de-run").build();
 
         company.addProject(ukProject);
         company.addProject(usProject);
@@ -34,25 +32,27 @@ public class ChallengeWeek2 {
 
         log.debug("Company status: \n{}", company);
 
-        company.assignEmployeeToProject(mark, ukProject);
-        company.assignEmployeeToProject(john, ukProject);
-        company.assignEmployeeToProject(clara, ukProject);
-        company.assignEmployeeToProject(eli, deProject);
+        ukProject.addEmployee(mark);
+        ukProject.addEmployee(john);
+        ukProject.addEmployee(clara);
+        deProject.addEmployee(eli);
 
         log.debug("Company status: \n{}", company);
 
         log.debug("Paying to employees from project: {}", ukProject);
-        company.paySalary(ukProject);
+        ukProject.paySalary();
         log.debug("Paying to employees from project: {} ", usProject);
-        company.paySalary(usProject);
+        usProject.paySalary();
         log.debug("Paying to employee: {}", john);
-        company.paySalary(john);
+        john.paySalary();
+        log.debug("Paying to employee: {}", clara);
+        clara.paySalary();
         log.debug("Paying to all");
         company.paySalary();
 
-
-        company.unassignEmployeeFromProject(eli, deProject);
-
+        log.debug("Reassign {} from: {} to: {}", eli, deProject, ukProject);
+        company.reassignEmployee(eli, deProject, ukProject);
+        ukProject.removeEmployee(john);
         log.debug("Company status: \n{}", company);
     }
 }

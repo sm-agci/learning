@@ -2,14 +2,13 @@ package sm.learning.week2;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Getter
-@Setter
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @ToString
@@ -19,7 +18,7 @@ class ContractEmployee extends Employee {
 
     @Override
     public void paySalary() {
-        log.debug("[{} {}] Paying salary: {}", firstName, lastName, getSalary());
+        log.debug("[{} {}] Receiving salary: {}", firstName, lastName, getSalary());
     }
 
     @Override
